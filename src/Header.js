@@ -1,7 +1,12 @@
-export default function Header() {
+export default function Header({ title }) {
   return (
     <header>
-      <h1 id="header-div">Groceries List</h1>
+      <h1 id="header-div">{title}</h1>
     </header>
   );
 }
+
+// DEFAULT PROPS
+Header.defaultProps = {
+  title: "Default Title",
+};

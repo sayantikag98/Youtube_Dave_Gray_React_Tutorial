@@ -1,8 +1,12 @@
-export default function Footer() {
+export default function Footer({ count }) {
   const date = new Date().toLocaleDateString();
+  const str = count === 1 ? "Item" : "Items";
   return (
-    <footer>
-      <p id="footer-div">Copyright © {date.split("/")[2]}</p>
+    <footer id="footer-div">
+      <p>
+        {count} List {str}
+      </p>
+      <p>Copyright © {date.split("/")[2]}</p>
     </footer>
   );
 }
