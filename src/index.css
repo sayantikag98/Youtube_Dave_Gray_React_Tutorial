@@ -16,11 +16,17 @@ code {
 }
 
 main {
-  height: 75vh;
+  height: max-content;
+  min-height: 80vh;
+  padding: 20px;
+}
+
+#list-div {
+  align-self: flex-start;
 }
 
 #app-div {
-  text-align: center;
+  /* text-align: center; */
 }
 
 #main-div {
@@ -35,17 +41,14 @@ main {
 }
 
 #main-div > p {
-  margin: 20px;
+  margin: 6px;
 }
 
-#footer-div {
-  background-color: blueviolet;
-  padding: 10px;
-  color: whitesmoke;
-}
-
+#footer-div,
 #header-div {
   background-color: blueviolet;
   padding: 20px;
   color: whitesmoke;
+  display: flex;
+  justify-content: center;
 }
