@@ -17,7 +17,7 @@ code {
 
 main {
   height: max-content;
-  min-height: 80vh;
+  min-height: 58vh;
   padding: 20px;
 }
 
@@ -83,4 +83,47 @@ main {
   justify-content: center;
   flex-direction: column;
   align-items: center;
+}
+
+#form-item {
+  display: flex;
+  padding: 20px;
+  align-items: center;
+  margin: 10px;
+}
+
+#add-item {
+  margin: 20px;
+  height: 30px;
+  font-size: 20px;
+  border-radius: 10px;
+  padding: 5px;
+  background-color: rgb(248, 176, 248);
+  color: blueviolet;
+  border: 2px solid blueviolet;
+  outline: none;
+}
+
+/* to change the color of the placeholder text */
+#add-item::placeholder {
+  color: blueviolet;
+}
+
+#plus-item {
+  background-color: rgb(248, 176, 248);
+  border-radius: 10px;
+  border: 2px solid blueviolet;
+  display: flex;
+}
+
+#plus-item:hover {
+  background-color: rgb(255, 82, 246);
+  border-radius: 10px;
+  border: 2px solid blueviolet;
+}
+
+#faplus-item {
+  height: 25px;
+  width: 20px;
+  color: blueviolet;
 }
