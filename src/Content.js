@@ -1,9 +1,11 @@
 import AddItem from "./AddItem";
 import UserInput from "./UserInput";
+import UserSearch from "./UserSearch";
 import { useState } from "react";
 
 export default function Content({ groceryItem, setGroceryItem }) {
   const [newState, setNewState] = useState("");
+  const [searchState, setSearchState] = useState("");
 
   const SetAndSave = (newObj) => {
     setGroceryItem(newObj);
@@ -50,9 +52,13 @@ export default function Content({ groceryItem, setGroceryItem }) {
         setNewState={setNewState}
         HandlerUserInput={HandlerUserInput}
       />
+      <UserSearch searchState={searchState} setSearchState={setSearchState} />
       {groceryItem.length > 0 ? (
         <AddItem
-          groceryItem={groceryItem}
+          // Filter by using keyword logic
+          groceryItem={groceryItem.filter((ele) =>
+            ele.pdt.startsWith(searchState)
+          )}
           HandlerOnChange={HandlerOnChange}
           HandlerDeleteEvent={HandlerDeleteEvent}
         />

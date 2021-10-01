@@ -87,12 +87,12 @@ main {
 
 #form-item {
   display: flex;
-  padding: 20px;
   align-items: center;
   margin: 10px;
 }
 
-#add-item {
+#add-item,
+#search-item {
   margin: 20px;
   height: 30px;
   font-size: 20px;
@@ -105,7 +105,8 @@ main {
 }
 
 /* to change the color of the placeholder text */
-#add-item::placeholder {
+#add-item::placeholder,
+#search-item::placeholder {
   color: blueviolet;
 }
 
