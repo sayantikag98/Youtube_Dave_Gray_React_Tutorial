@@ -1,7 +1,7 @@
 import ListItem from "./ListItem";
 
-const AddItem = ({ groceryItem, HandlerOnChange, HandlerDeleteEvent }) =>
-  groceryItem.map((ele) => {
+const AddItem = ({ taskItem, HandlerOnChange, HandlerDeleteEvent }) =>
+  taskItem.map((ele) => {
     return (
       <ul id="ul-div">
         <ListItem

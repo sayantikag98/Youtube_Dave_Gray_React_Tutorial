@@ -5,16 +5,16 @@ import { useState } from "react";
 
 export default function App() {
   let initialState = [];
-  if (localStorage.getItem("shoppingList") !== null) {
-    initialState = JSON.parse(localStorage.getItem("shoppingList"));
+  if (localStorage.getItem("taskList") !== null) {
+    initialState = JSON.parse(localStorage.getItem("taskList"));
   }
-  const [groceryItem, setGroceryItem] = useState(initialState);
+  const [taskItem, setTaskItem] = useState(initialState);
 
   return (
     <div id="app-div">
       <Header title="Task List" />
-      <Content groceryItem={groceryItem} setGroceryItem={setGroceryItem} />
-      <Footer count={groceryItem.length} />
+      <Content taskItem={taskItem} setTaskItem={setTaskItem} />
+      <Footer />
     </div>
   );
 }

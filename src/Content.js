@@ -3,31 +3,34 @@ import UserInput from "./UserInput";
 import UserSearch from "./UserSearch";
 import { useState } from "react";
 
-export default function Content({ groceryItem, setGroceryItem }) {
+export default function Content({ taskItem, setTaskItem }) {
   const [newState, setNewState] = useState("");
   const [searchState, setSearchState] = useState("");
+  const filteredItems = taskItem.filter((ele) =>
+    ele.pdt.toLowerCase().startsWith(searchState.toLowerCase())
+  );
 
   const SetAndSave = (newObj) => {
-    setGroceryItem(newObj);
-    localStorage.setItem("shoppingList", JSON.stringify(newObj));
+    setTaskItem(newObj);
+    localStorage.setItem("taskList", JSON.stringify(newObj));
   };
 
   const HandlerOnChange = (ind) => {
     // One Approach
-    const newObj = groceryItem.map((ele) => {
+    const newObj = taskItem.map((ele) => {
       ele.checked =
         ele.id === ind ? (ele.checked === true ? false : true) : ele.checked;
       return ele;
     });
     /* Another Approach
-    // let copyObj = [...groceryItem];
+    // let copyObj = [...taskItem];
     // copyObj[ind].checked = copyObj[ind].checked === true ? false : true;
     */
     SetAndSave(newObj);
   };
 
   const HandlerDeleteEvent = (ind) => {
-    let newObj = groceryItem.filter((ele) => ele.id !== ind);
+    let newObj = taskItem.filter((ele) => ele.id !== ind);
     SetAndSave(newObj);
   };
 
@@ -36,11 +39,11 @@ export default function Content({ groceryItem, setGroceryItem }) {
   const HandlerUserInput = (event) => {
     event.preventDefault();
     const obj = {
-      id: groceryItem.length + 1,
+      id: taskItem.length + 1,
       pdt: newState,
       checked: false,
     };
-    const newObj = [...groceryItem, obj];
+    const newObj = [...taskItem, obj];
     SetAndSave(newObj);
     setNewState("");
   };
@@ -53,12 +56,14 @@ export default function Content({ groceryItem, setGroceryItem }) {
         HandlerUserInput={HandlerUserInput}
       />
       <UserSearch searchState={searchState} setSearchState={setSearchState} />
-      {groceryItem.length > 0 ? (
+      <p>
+        {filteredItems.length} List{" "}
+        {filteredItems.length === 1 ? "Item" : "Items"}
+      </p>
+      {taskItem.length > 0 ? (
         <AddItem
           // Filter by using keyword logic
-          groceryItem={groceryItem.filter((ele) =>
-            ele.pdt.startsWith(searchState)
-          )}
+          taskItem={filteredItems}
           HandlerOnChange={HandlerOnChange}
           HandlerDeleteEvent={HandlerDeleteEvent}
         />
