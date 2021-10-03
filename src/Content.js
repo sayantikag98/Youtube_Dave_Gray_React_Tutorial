@@ -1,7 +1,7 @@
 import AddItem from "./AddItem";
 import UserInput from "./UserInput";
 import UserSearch from "./UserSearch";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Content({ taskItem, setTaskItem }) {
   const [newState, setNewState] = useState("");
@@ -10,10 +10,21 @@ export default function Content({ taskItem, setTaskItem }) {
     ele.pdt.toLowerCase().startsWith(searchState.toLowerCase())
   );
 
-  const SetAndSave = (newObj) => {
-    setTaskItem(newObj);
-    localStorage.setItem("taskList", JSON.stringify(newObj));
-  };
+  useEffect(() => {
+    localStorage.setItem("taskList", JSON.stringify(taskItem));
+  }, [taskItem]);
+
+  /*
+
+  never set the state of an item inside the useEffect when that item 
+  is in the dependency list otherwise that will create an infinite loop
+
+  // NEVER DO THIS 
+  useEffect(()=>{
+    setTaskItem(taskItem);
+  }, [taskItem]);
+
+  */
 
   const HandlerOnChange = (ind) => {
     // One Approach
@@ -26,12 +37,12 @@ export default function Content({ taskItem, setTaskItem }) {
     // let copyObj = [...taskItem];
     // copyObj[ind].checked = copyObj[ind].checked === true ? false : true;
     */
-    SetAndSave(newObj);
+    setTaskItem(newObj);
   };
 
   const HandlerDeleteEvent = (ind) => {
     let newObj = taskItem.filter((ele) => ele.id !== ind);
-    SetAndSave(newObj);
+    setTaskItem(newObj);
   };
 
   // IMPORTANT FUNCTION FOR HANDLING USER INPUT
@@ -44,7 +55,7 @@ export default function Content({ taskItem, setTaskItem }) {
       checked: false,
     };
     const newObj = [...taskItem, obj];
-    SetAndSave(newObj);
+    setTaskItem(newObj);
     setNewState("");
   };
 

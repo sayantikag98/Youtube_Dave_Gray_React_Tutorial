@@ -4,11 +4,9 @@ import Footer from "./Footer";
 import { useState } from "react";
 
 export default function App() {
-  let initialState = [];
-  if (localStorage.getItem("taskList") !== null) {
-    initialState = JSON.parse(localStorage.getItem("taskList"));
-  }
-  const [taskItem, setTaskItem] = useState(initialState);
+  const [taskItem, setTaskItem] = useState(
+    JSON.parse(localStorage.getItem("taskList"))
+  );
 
   return (
     <div id="app-div">
