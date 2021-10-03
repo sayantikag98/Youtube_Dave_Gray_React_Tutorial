@@ -89,6 +89,7 @@ main {
   display: flex;
   align-items: center;
   margin: 10px;
+  padding: 5px;
 }
 
 #add-item,

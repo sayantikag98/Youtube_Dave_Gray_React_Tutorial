@@ -1,14 +1,19 @@
-import AddItem from "./AddItem";
 import UserInput from "./UserInput";
 import UserSearch from "./UserSearch";
 import { useState, useEffect } from "react";
+import SubContent from "./SubContent";
 
 export default function Content({ taskItem, setTaskItem }) {
+  /*
+Always run the server first by using command 
+npx json-server -p 3500 -w data/db.json
+  */
   const API_URL = "http://localhost:3500/items";
 
   const [newState, setNewState] = useState("");
   const [searchState, setSearchState] = useState("");
   const [fetchError, setFetchError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   // useEffect(() => {
   //   localStorage.setItem("taskList", JSON.stringify(taskItem));
@@ -29,9 +34,13 @@ export default function Content({ taskItem, setTaskItem }) {
       } catch (err) {
         console.log(err.message);
         setFetchError(err.message);
+      } finally {
+        setIsLoading(true);
       }
     };
-    fetchData();
+    setTimeout(() => {
+      fetchData();
+    }, 7000);
   }, []);
 
   /*
@@ -58,10 +67,6 @@ export default function Content({ taskItem, setTaskItem }) {
 
   */
 
-  const filteredItems = taskItem.filter((ele) =>
-    ele.pdt.toLowerCase().startsWith(searchState.toLowerCase())
-  );
-
   return (
     <main id="main-div">
       <UserInput
@@ -70,22 +75,16 @@ export default function Content({ taskItem, setTaskItem }) {
         setNewState={setNewState}
         setTaskItem={setTaskItem}
       />
-      <UserSearch searchState={searchState} setSearchState={setSearchState} />
-      {fetchError && <p>{fetchError}</p>}
-      {!fetchError && (
-        <div id="content-div">
-          {filteredItems.length} List{" "}
-          {filteredItems.length === 1 ? "Item" : "Items"}
-          {taskItem.length > 0 ? (
-            <AddItem
-              // Filter by using keyword logic
-              taskItem={filteredItems}
-              setTaskItem={setTaskItem}
-            />
-          ) : (
-            <p>Hey!! Your list is empty...</p>
-          )}
-        </div>
+      <UserSearch searchState={searchState} useSearchState={setSearchState} />
+      {isLoading ? (
+        <SubContent
+          fetchError={fetchError}
+          searchState={searchState}
+          taskItem={taskItem}
+          setTaskItem={setTaskItem}
+        />
+      ) : (
+        <p>Loading Data ...</p>
       )}
     </main>
   );
