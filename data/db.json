@@ -1,0 +1,29 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "pdt": "chair",
+      "checked": false
+    },
+    {
+      "id": 2,
+      "pdt": "table",
+      "checked": false
+    },
+    {
+      "id": 3,
+      "pdt": "stool",
+      "checked": false
+    },
+    {
+      "id": 4,
+      "pdt": "tube light",
+      "checked": false
+    },
+    {
+      "id": 5,
+      "pdt": "fan",
+      "checked": false
+    }
+  ]
+}

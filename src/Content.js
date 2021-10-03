@@ -4,16 +4,48 @@ import UserSearch from "./UserSearch";
 import { useState, useEffect } from "react";
 
 export default function Content({ taskItem, setTaskItem }) {
+  const API_URL = "http://localhost:3500/items";
+
   const [newState, setNewState] = useState("");
   const [searchState, setSearchState] = useState("");
-  const filteredItems = taskItem.filter((ele) =>
-    ele.pdt.toLowerCase().startsWith(searchState.toLowerCase())
-  );
+  const [fetchError, setFetchError] = useState(null);
+
+  // useEffect(() => {
+  //   localStorage.setItem("taskList", JSON.stringify(taskItem));
+  // }, [taskItem]);
+
+  /*
+  useEffect for fetching data from server using async-await syntax 
+  */
 
   useEffect(() => {
-    localStorage.setItem("taskList", JSON.stringify(taskItem));
-  }, [taskItem]);
+    const fetchData = async () => {
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw new Error("Data not fetched");
+        const data = await response.json();
+        setTaskItem(data);
+        setFetchError(null);
+      } catch (err) {
+        console.log(err.message);
+        setFetchError(err.message);
+      }
+    };
+    fetchData();
+  }, []);
 
+  /*
+  useEffect for fetching data from server using promise syntax
+  */
+
+  // useEffect(() => {
+  //   fetch(API_URL)
+  //     .then((data) => data.json())
+  //     .then((data) => {
+  //       setTaskItem(data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
   /*
 
   never set the state of an item inside the useEffect when that item 
@@ -26,60 +58,34 @@ export default function Content({ taskItem, setTaskItem }) {
 
   */
 
-  const HandlerOnChange = (ind) => {
-    // One Approach
-    const newObj = taskItem.map((ele) => {
-      ele.checked =
-        ele.id === ind ? (ele.checked === true ? false : true) : ele.checked;
-      return ele;
-    });
-    /* Another Approach
-    // let copyObj = [...taskItem];
-    // copyObj[ind].checked = copyObj[ind].checked === true ? false : true;
-    */
-    setTaskItem(newObj);
-  };
-
-  const HandlerDeleteEvent = (ind) => {
-    let newObj = taskItem.filter((ele) => ele.id !== ind);
-    setTaskItem(newObj);
-  };
-
-  // IMPORTANT FUNCTION FOR HANDLING USER INPUT
-
-  const HandlerUserInput = (event) => {
-    event.preventDefault();
-    const obj = {
-      id: taskItem.length + 1,
-      pdt: newState,
-      checked: false,
-    };
-    const newObj = [...taskItem, obj];
-    setTaskItem(newObj);
-    setNewState("");
-  };
+  const filteredItems = taskItem.filter((ele) =>
+    ele.pdt.toLowerCase().startsWith(searchState.toLowerCase())
+  );
 
   return (
     <main id="main-div">
       <UserInput
         newState={newState}
+        taskItem={taskItem}
         setNewState={setNewState}
-        HandlerUserInput={HandlerUserInput}
+        setTaskItem={setTaskItem}
       />
       <UserSearch searchState={searchState} setSearchState={setSearchState} />
-      <p>
-        {filteredItems.length} List{" "}
-        {filteredItems.length === 1 ? "Item" : "Items"}
-      </p>
-      {taskItem.length > 0 ? (
-        <AddItem
-          // Filter by using keyword logic
-          taskItem={filteredItems}
-          HandlerOnChange={HandlerOnChange}
-          HandlerDeleteEvent={HandlerDeleteEvent}
-        />
-      ) : (
-        <p>Hey!! Your list is empty...</p>
+      {fetchError && <p>{fetchError}</p>}
+      {!fetchError && (
+        <div id="content-div">
+          {filteredItems.length} List{" "}
+          {filteredItems.length === 1 ? "Item" : "Items"}
+          {taskItem.length > 0 ? (
+            <AddItem
+              // Filter by using keyword logic
+              taskItem={filteredItems}
+              setTaskItem={setTaskItem}
+            />
+          ) : (
+            <p>Hey!! Your list is empty...</p>
+          )}
+        </div>
       )}
     </main>
   );

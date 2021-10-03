@@ -5,7 +5,8 @@ import { useState } from "react";
 
 export default function App() {
   const [taskItem, setTaskItem] = useState(
-    JSON.parse(localStorage.getItem("taskList"))
+    /* JSON.parse(localStorage.getItem("taskList"))*/
+    []
   );
 
   return (

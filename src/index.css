@@ -128,3 +128,10 @@ main {
   width: 20px;
   color: blueviolet;
 }
+
+#content-div {
+  display: flex;
+  flex-direction: column;
+  width: 85%;
+  align-items: center;
+}
