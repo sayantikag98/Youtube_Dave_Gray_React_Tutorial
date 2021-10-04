@@ -1,6 +1,6 @@
 to launch the json server run npx json-server -p 3500 -w Data/db.json
 
-GET
-POST 
-PATCH
-DELETE
+GET METHOD => READ OPERATION
+POST METHOD => CREATE OPERATION
+PATCH => UPDATE OPERATION
+DELETE => DELETE OPERATION

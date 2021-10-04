@@ -23,6 +23,8 @@ npx json-server -p 3500 -w data/db.json
   useEffect for fetching data from server using async-await syntax 
   */
 
+  // READ OPERATION OF CRUD
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -70,18 +72,22 @@ npx json-server -p 3500 -w data/db.json
   return (
     <main id="main-div">
       <UserInput
+        API_URL={API_URL}
         newState={newState}
         taskItem={taskItem}
         setNewState={setNewState}
         setTaskItem={setTaskItem}
+        setFetchError={setFetchError}
       />
       <UserSearch searchState={searchState} useSearchState={setSearchState} />
       {isLoading ? (
         <SubContent
+          API_URL={API_URL}
           fetchError={fetchError}
           searchState={searchState}
           taskItem={taskItem}
           setTaskItem={setTaskItem}
+          setFetchError={setFetchError}
         />
       ) : (
         <p>Loading Data ...</p>
